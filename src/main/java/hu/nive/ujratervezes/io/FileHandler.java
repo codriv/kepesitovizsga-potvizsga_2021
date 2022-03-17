@@ -10,13 +10,10 @@ import static java.nio.file.Files.readAllLines;
 public class FileHandler {
 
     public int sumIgnoreComments(String path) {
-        List<String> numbers;
         try {
-            numbers = Files.readAllLines(Path.of(path));
+            return Files.readAllLines(Path.of(path)).stream().filter(line -> !line.startsWith("//")).mapToInt(Integer::parseInt).sum();
         } catch (IOException ioe) {
             throw new IllegalStateException("Can not read file!");
         }
-        return numbers.stream().filter(line -> !line.startsWith("//")).mapToInt(Integer::parseInt).sum();
     }
-
 }
