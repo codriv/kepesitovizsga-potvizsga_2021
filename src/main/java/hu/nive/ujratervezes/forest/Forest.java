@@ -30,6 +30,6 @@ public class Forest {
     }
 
     public List<String> getStatus() {
-        return trees.stream().map(tree -> "There is a " + tree.getHeight() + " tall " + tree.getClass().getSimpleName() + " in the forest.").collect(Collectors.toList());
+        return trees.stream().map(tree -> String.format("There is a %d tall %s in the forest.", tree.getHeight(), tree.getClass().getSimpleName())).collect(Collectors.toList());
     }
 }
