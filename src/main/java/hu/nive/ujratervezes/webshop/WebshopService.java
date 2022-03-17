@@ -20,16 +20,20 @@ public class WebshopService {
     public List<String> getValuableCustomers() {
         try(Connection con = dataSource.getConnection();
             Statement stmt = con.createStatement()) {
-            try(ResultSet rs = stmt.executeQuery("select customer_name from orders where total > 1000 order by customer_name")) {
-                List<String> customers = new ArrayList<>();
-                while (rs.next()) {
-                    String customer = rs.getString("customer_name");
-                    customers.add(customer);
-                }
-                return customers;
-            }
+            return getResult(stmt);
         } catch (SQLException sqle) {
             throw new IllegalStateException("Cannot reach database!");
+        }
+    }
+
+    private List<String> getResult(Statement stmt) throws SQLException {
+        try(ResultSet rs = stmt.executeQuery("select customer_name from orders where total > 1000 order by customer_name")) {
+            List<String> customers = new ArrayList<>();
+            while (rs.next()) {
+                String customer = rs.getString("customer_name");
+                customers.add(customer);
+            }
+            return customers;
         }
     }
 }
