@@ -12,6 +12,7 @@ import java.util.List;
 public class WebshopService {
 
     private MariaDbDataSource dataSource;
+    private final int LIMIT = 1000;
 
     public WebshopService(MariaDbDataSource dataSource) {
         this.dataSource = dataSource;
@@ -27,7 +28,7 @@ public class WebshopService {
     }
 
     private List<String> getResult(Statement stmt) throws SQLException {
-        try(ResultSet rs = stmt.executeQuery("select customer_name from orders where total > 1000 order by customer_name")) {
+        try(ResultSet rs = stmt.executeQuery("select customer_name from orders where total > " + LIMIT + " order by customer_name")) {
             List<String> customers = new ArrayList<>();
             while (rs.next()) {
                 String customer = rs.getString("customer_name");
